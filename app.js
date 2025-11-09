@@ -15,17 +15,18 @@ let operator = null;
 const buttons = document.querySelectorAll('.button');
 const calculator = document.querySelector('#calculator');
 const display = document.querySelector('.display');
+// added 'clear' class to C button operator
+const clear = document.querySelector('.clear');
 
 /*----------------------------- Event Listeners -----------------------------*/
 
 buttons.forEach((button) => {
   button.addEventListener('click', (event) => {
-    // This log is for testing purposes to verify we're getting the correct value
-    console.log(event.target.innerText);
-    // Future logic to capture the button's value would go here...
+    // didn't know what to use this for?
   });
 });
 
+// function to allow user to enter an additional number to display
 calculator.addEventListener('click', (event) => {
   if (event.target.classList.contains('number')) {
     display.textContent += event.target.innerText;
@@ -33,15 +34,18 @@ calculator.addEventListener('click', (event) => {
         num1 = parseInt(display.textContent);
     } else {
         let index = display.textContent.indexOf(operator);
-        num2 = parseInt(display.textContent.substring(index));
+        num2 = parseInt(display.textContent.substring(index + 1));
     }
   }
+
+  // function to add an additional number to calculation following operator
   if (event.target.classList.contains('operator')) {
     display.textContent += event.target.innerText;
     operator = event.target.innerText;
     console.log(operator);
-    
   }
+
+  // calculation function
   if (event.target.classList.contains('equals')) {
         console.log('hello');
         if (operator === '*') {
@@ -58,5 +62,15 @@ calculator.addEventListener('click', (event) => {
         total = num1 / num2;
         }
         display.textContent = total;
+    }
+
+    // clear button function
+    if (event.target.classList.contains('clear')) {
+      num1 = null;
+      num2 = null;
+      total = null;
+      operator = null;
+      display.textContent = '';
+      console.log('Calculator cleared!');
     }
 });
